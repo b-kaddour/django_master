@@ -10,7 +10,7 @@ jobs:
       mariadb:
         image: mariadb:latest
         ports:
-          - 3307
+          - 3306
         env:
           MYSQL_USER: kaddour
           MYSQL_PASSWORD: boubou
@@ -21,12 +21,5 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Verify MariaDB connection
-        env:
-          PORT: ${{ job.services.mariadb.ports[3307] }}
-        run: |
-          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
-            sleep 1
-          done
       - name: Test
         run: python manage.py test
